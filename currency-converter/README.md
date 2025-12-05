@@ -1,16 +1,29 @@
-# React + Vite
+Currency Converter – React + Tailwind + Exchange Rate API
+A simple and responsive web-based currency converter built with React, Vite, and Tailwind CSS. The app fetches real-time exchange rates from ExchangeRate-API and allows users to convert between global currencies instantly. Designed as a capstone project focusing on API integration, UI development, and modern frontend tooling.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+INSTALLATION
 
-Currently, two official plugins are available:
+git clone https://github.com/andymens400-ctrl/currency-converter.git
+cd currency-converter
+npm install
+npm run dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+PROJECT STRUCTURE
 
-## React Compiler
+src/
+├── components/
+│   ├── Header.jsx
+│   ├── ConverterForm.jsx
+│   ├── ResultDisplay.jsx
+│   ├── ErrorMessage.jsx
+│   └── Loader.jsx
+├── hooks/
+├── utils/
+├── App.jsx
+├── index.css
+└── main.jsx
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+TO BE UPDATED LATER
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+More details, features, and documentation will be added as the project develops.
+Stay tuned for updates in upcoming weeks.

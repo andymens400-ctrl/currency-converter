@@ -1,14 +1,28 @@
-import Header from "./components/Header";
+import { useState } from "react";
+import Header from "./components/Header.jsx";
+import ConverterForm from "./components/ConverterForm.jsx";
+import ResultDisplay from "./components/ResultDisplay.jsx";
 
-function App() {
+export default function App() {
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+    <div style={{ padding: "40px" }}>
       <Header />
-      <div className="mt-8 text-gray-800">
-        <h2 className="text-lg">Currency Converter Coming Soon...</h2>
-      </div>
+
+      <ConverterForm
+        setResult={setResult}
+        setLoading={setLoading}
+        setError={setError}
+      />
+
+      <ResultDisplay
+        result={result}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 }
-
-export default App;

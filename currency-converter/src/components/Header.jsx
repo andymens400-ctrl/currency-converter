@@ -1,7 +1,12 @@
 export default function Header() {
   return (
-    <header className="w-full text-center py-6 bg-blue-600 text-white rounded-md">
-      <h1 className="text-3xl font-bold">Currency Converter</h1>
+    <header style={{ marginBottom: "24px" }}>
+      <h1 style={{ color: "#2563eb", fontSize: "32px" }}>
+        currencyXchange
+      </h1>
+      <p style={{ color: "#555" }}>
+        Simple currency converter
+      </p>
     </header>
   );
 }

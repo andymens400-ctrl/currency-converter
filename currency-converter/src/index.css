@@ -1,1 +1,1 @@
-/* Tailwind v4 uses the index.css file only as a global stylesheet — no tailwind imports needed */
+@import "tailwindcss";

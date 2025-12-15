@@ -1,51 +1,127 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function ConverterForm({ setResult, setLoading, setError }) {
+const API_KEY = import.meta.env.VITE_EXCHANGE_API_KEY;
+
+export default function ConverterForm({
+  setResult,
+  setLoading,
+  setError,
+  setHistory,
+}) {
   const [amount, setAmount] = useState("");
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("GHS");
+  const [currencies, setCurrencies] = useState([]);
 
-  function handleSubmit(e) {
+  // Fetch available currencies once
+  useEffect(() => {
+    async function fetchCurrencies() {
+      try {
+        const res = await fetch(
+          `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
+        );
+        const data = await res.json();
+
+        if (!data.conversion_rates) {
+          throw new Error("Invalid API response");
+        }
+
+        setCurrencies(Object.keys(data.conversion_rates));
+      } catch (error) {
+        setError("Failed to load currency list");
+      }
+    }
+
+    fetchCurrencies();
+  }, [setError]);
+
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setResult(null);
 
-    setTimeout(() => {
-      setResult(`${amount} ${from} → ${to}`);
+    try {
+      const res = await fetch(
+        `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${from}`
+      );
+      const data = await res.json();
+
+      if (!data.conversion_rates) {
+        throw new Error("Invalid API response");
+      }
+
+      const rate = data.conversion_rates[to];
+      const converted = (amount * rate).toFixed(2);
+
+      const output = `${amount} ${from} = ${converted} ${to}`;
+
+      setResult(output);
+      setHistory((prev) => [output, ...prev]);
+    } catch (error) {
+      setError("Conversion failed. Please try again.");
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div style={{ marginBottom: "12px" }}>
-        <label>Amount</label><br />
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-      </div>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    <div>
+      <label className="block text-sm font-medium text-blue-700">
+        Amount
+      </label>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        required
+        className="w-full border rounded-lg p-2 mt-1"
+      />
+    </div>
 
-      <div style={{ marginBottom: "12px" }}>
-        <label>From</label><br />
-        <select value={from} onChange={(e) => setFrom(e.target.value)}>
-          <option>USD</option>
-          <option>GHS</option>
-          <option>EUR</option>
+    <div className="grid grid-cols-2 gap-4">
+      <div>
+        <label className="block text-sm font-medium text-blue-700">
+          From
+        </label>
+        <select
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+          className="w-full border rounded-lg p-2 mt-1"
+        >
+          {currencies.map((cur) => (
+            <option key={cur} value={cur}>
+              {cur}
+            </option>
+          ))}
         </select>
       </div>
 
-      <div style={{ marginBottom: "12px" }}>
-        <label>To</label><br />
-        <select value={to} onChange={(e) => setTo(e.target.value)}>
-          <option>GHS</option>
-          <option>USD</option>
-          <option>EUR</option>
+      <div>
+        <label className="block text-sm font-medium text-blue-700">
+          To
+        </label>
+        <select
+          value={to}
+          onChange={(e) => setTo(e.target.value)}
+          className="w-full border rounded-lg p-2 mt-1"
+        >
+          {currencies.map((cur) => (
+            <option key={cur} value={cur}>
+              {cur}
+            </option>
+          ))}
         </select>
       </div>
+    </div>
 
-      <button type="submit">Convert</button>
-    </form>
-  );
+    <button
+      type="submit"
+      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+    >
+      Convert
+    </button>
+  </form>
+);
 }

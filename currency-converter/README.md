@@ -23,7 +23,25 @@ src/
 ├── index.css
 └── main.jsx
 
-TO BE UPDATED LATER
+Live Demo
+👉 (Add your deployed Netlify/Vercel lnk here)
 
-More details, features, and documentation will be added as the project develops.
-Stay tuned for updates in upcoming weeks.
+
+
+ Features
+- Convert between multiple currencies in real time
+- Searchable currency dropdowns
+- Swap currencies instantly (↕️)
+- Conversion history
+- Loading and error states
+- Clean white & blue UI
+- Fully responsive design
+
+
+ Tech Stack
+- **React** (Vite)
+- **Tailwind CSS v4**
+- **ExchangeRate API**
+- **Netlify / Vercel** (Deployment)
+
+

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_KEY = import.meta.env.VITE_EXCHANGE_API_KEY;
+const API_KEY = "ef0619fb464177f49da7a4f2";
 
 export default function ConverterForm({
   setResult,

@@ -10,28 +10,29 @@ npm run dev
 
 PROJECT STRUCTURE
 
-src/
-├── components/
-│   ├── Header.jsx
-│   ├── ConverterForm.jsx
-│   ├── ResultDisplay.jsx
-│   ├── ErrorMessage.jsx
-│   └── Loader.jsx
-├── hooks/
-├── utils/
-├── App.jsx
-├── index.css
-└── main.jsx
+**src/**
+components/
+Header.jsx
+ConverterForm.jsx
+ResultDisplay.jsx
+ErrorMessage.jsx
+Loader.jsx
+HistoryList.jsx
+
+**hooks/**
+**utils**
+**App.jsx**
+**index.css**
+**main.jsx**
 
 Live Demo
-👉 (Add your deployed Netlify/Vercel lnk here)
-
+https://currency-converter-rho-olive.vercel.app/
 
 
  Features
 - Convert between multiple currencies in real time
 - Searchable currency dropdowns
-- Swap currencies instantly (↕️)
+- Swap currencies instantly 
 - Conversion history
 - Loading and error states
 - Clean white & blue UI
@@ -42,6 +43,6 @@ Live Demo
 - **React** (Vite)
 - **Tailwind CSS v4**
 - **ExchangeRate API**
-- **Netlify / Vercel** (Deployment)
+- **Vercel** (Deployment)
 
 

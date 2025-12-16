@@ -51,13 +51,22 @@ export default function ConverterForm({
         throw new Error("Invalid API response");
       }
 
-      const rate = data.conversion_rates[to];
-      const converted = (amount * rate).toFixed(2);
+      const rate = data.conversion_rates?.[to];
+      if (!rate) {
+        throw new Error("Invalid currency selected");
+      }
 
-      const output = `${amount} ${from} = ${converted} ${to}`;
+      const converted = Number(amount) * rate;
 
-      setResult(output);
-      setHistory((prev) => [output, ...prev]);
+      const resultData = {
+        amount,
+        from,
+        to,
+        converted,
+      };
+
+      setResult(resultData);
+      setHistory((prev) => [resultData, ...prev]);
     } catch (error) {
       setError("Conversion failed. Please try again.");
     } finally {
@@ -66,62 +75,62 @@ export default function ConverterForm({
   }
 
   return (
-  <form onSubmit={handleSubmit} className="space-y-4">
-    <div>
-      <label className="block text-sm font-medium text-blue-700">
-        Amount
-      </label>
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        required
-        className="w-full border rounded-lg p-2 mt-1"
-      />
-    </div>
-
-    <div className="grid grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-blue-700">
-          From
+          Amount
         </label>
-        <select
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          required
           className="w-full border rounded-lg p-2 mt-1"
-        >
-          {currencies.map((cur) => (
-            <option key={cur} value={cur}>
-              {cur}
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-blue-700">
-          To
-        </label>
-        <select
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-          className="w-full border rounded-lg p-2 mt-1"
-        >
-          {currencies.map((cur) => (
-            <option key={cur} value={cur}>
-              {cur}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-blue-700">
+            From
+          </label>
+          <select
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            className="w-full border rounded-lg p-2 mt-1"
+          >
+            {currencies.map((cur) => (
+              <option key={cur} value={cur}>
+                {cur}
+              </option>
+            ))}
+          </select>
+        </div>
 
-    <button
-      type="submit"
-      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-    >
-      Convert
-    </button>
-  </form>
-);
+        <div>
+          <label className="block text-sm font-medium text-blue-700">
+            To
+          </label>
+          <select
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            className="w-full border rounded-lg p-2 mt-1"
+          >
+            {currencies.map((cur) => (
+              <option key={cur} value={cur}>
+                {cur}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+      >
+        Convert
+      </button>
+    </form>
+  );
 }

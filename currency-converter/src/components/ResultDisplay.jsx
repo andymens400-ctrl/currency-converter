@@ -4,14 +4,20 @@ import ErrorMessage from "./ErrorMessage";
 export default function ResultDisplay({ result, loading, error }) {
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
-  if (!result) return null;
 
   return (
-    <div className="mt-8 grid grid-cols-3 gap-4 items-center">
-      <p className="font-medium">Results :</p>
-      <div className="col-span-2 bg-gray-200 rounded-md p-2">
-        {result.amount} {result.from} ={" "}
-        <strong>{result.converted} {result.to}</strong>
+    <div className="mt-6">
+      <h3 className="font-semibold mb-2">Results :</h3>
+
+      <div className="bg-gray-200 rounded-lg p-3 min-h-11 flex items-center">
+        {result ? (
+          <span className="text-lg font-medium">
+            {result.amount} {result.from} ={" "}
+            {result.converted.toFixed(2)} {result.to}
+          </span>
+        ) : (
+          <span className="text-gray-500">=</span>
+        )}
       </div>
     </div>
   );
